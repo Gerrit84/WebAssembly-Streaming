@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hello Wasm</title>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Page Title</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+ 
+</head>
+<body>
+  Hello from Webassembly V2
+  <script>
+    function run_wasm(){
+      WebAssembly.instantiateStreaming(fetch("hello.wasm"),{}).then(results => {
+        var a = document.querySelector("#inA").value;
+        console.log(a);
+        var b = document.querySelector("#inB").value;
+        console.log(b);
+        var sum = results.instance.exports.calc(a,b);
+        console.log(sum);
+        document.querySelector("#outC").value = sum;
+      });
+    }
+  </script>
+  <button onclick="run_wasm()">Trigger</button>
+  <input id="inA" value="10" type="number">
+  <input id="inB" value="12" type="number">
+  <input id="outC" type="number">
+</body>
+</html>
